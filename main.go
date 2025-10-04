@@ -1,6 +1,7 @@
 package main
 
 import (
+	"booking-app/shared"
 	"fmt"
 	"strings"
 )
@@ -22,7 +23,7 @@ func main() {
 
 		firstName, lastName, email, userTickets := collectUserInputs()
 
-		var isValidName, isValidEmail, isValidUserTickets = validateInputs(firstName, lastName, email, userTickets)
+		var isValidName, isValidEmail, isValidUserTickets = shared.ValidateInputs(firstName, lastName, email, userTickets, remainingTickets)
 
 		if isValidName && isValidEmail && isValidUserTickets {
 			bookTicket(firstName, lastName, email, userTickets)
