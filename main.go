@@ -3,19 +3,24 @@ package main
 import (
 	"booking-app/shared"
 	"fmt"
-	"strconv"
-	"strings"
 )
 
 const conferenceTickets = 50
 
 var conferenceName = "Go Conference"
 var remainingTickets uint = 50
-var bookings = make([]map[string]string, 0)
+var bookings = make([]UserData, 0)
+
+type UserData struct {
+	firstName       string
+	lastName        string
+	email           string
+	numberOfTickets uint
+}
 
 func main() {
 	greetUsers()
- 
+
 	fmt.Println("Pointer example")
 	fmt.Println(remainingTickets)
 	fmt.Println(&remainingTickets)
@@ -54,8 +59,7 @@ func main() {
 func getFirstNames() []string {
 	var firstNames []string
 	for _, booking := range bookings {
-		names := strings.Fields(booking["firstName"])
-		firstNames = append(firstNames, names[0])
+		firstNames = append(firstNames, booking.firstName)
 	}
 	return firstNames
 }
@@ -89,12 +93,11 @@ func collectUserInputs() (string, string, string, uint) {
 func bookTicket(firstName string, lastName string, email string, userTickets uint) {
 	remainingTickets = remainingTickets - userTickets
 
-	//create map for user
-	var userData = make(map[string]string)
-	userData["firstName"] = firstName
-	userData["lastName"] = lastName
-	userData["email"] = email
-	userData["numberOfTickets"] = strconv.FormatUint(uint64(userTickets), 10)
+	var userData = UserData{
+		firstName,
+		lastName,
+		email,
+		userTickets}
 
 	bookings = append(bookings, userData)
 
