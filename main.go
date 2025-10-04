@@ -3,6 +3,7 @@ package main
 import (
 	"booking-app/shared"
 	"fmt"
+	"sync"
 	"time"
 )
 
@@ -19,6 +20,8 @@ type UserData struct {
 	numberOfTickets uint
 }
 
+var wg = sync.WaitGroup{}
+
 func main() {
 	greetUsers()
 
@@ -34,6 +37,8 @@ func main() {
 
 		if isValidName && isValidEmail && isValidUserTickets {
 			bookTicket(firstName, lastName, email, userTickets)
+
+			wg.Add(1)
 			go sendTicket(userTickets, firstName, lastName, email)
 
 			fmt.Printf("Bookers %v\n", getFirstNames())
@@ -56,6 +61,7 @@ func main() {
 			fmt.Println("Unrecognized city")
 		}
 	}
+	wg.Wait()
 }
 
 func getFirstNames() []string {
@@ -113,4 +119,5 @@ func sendTicket(numberOfTickets uint, firstName string, lastName string, emailAd
 	fmt.Println("##################")
 	fmt.Printf("Sent ticket: \n %v \n to email %v \n \n ", ticket, emailAddress)
 	fmt.Println("##################")
+	wg.Done()
 }
