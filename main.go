@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 
@@ -13,31 +16,42 @@ func main() {
 	fmt.Printf("Total %v, tickets remaining: %v\n", conferenceTickets, remainingTickets)
 	fmt.Println("Get your tickets here ")
 
-	var firstName string
-	var lastName string
-	var email string
-	var userTickets uint
-
-	fmt.Println("Pointer example")
-	fmt.Println(remainingTickets)
-	fmt.Println(&remainingTickets)
-
-	fmt.Println("Enter your first name:")
-	fmt.Scanln(&firstName)
-	fmt.Println("Enter your last name:")
-	fmt.Scanln(&lastName)
-	fmt.Println("Enter your email:")
-	fmt.Scanln(&email)
-	fmt.Println("Enter number of tickets:")
-	fmt.Scanln(&userTickets)
-
 	var bookings []string
-	bookings = append(bookings, firstName+"  "+lastName)
 
-	remainingTickets = remainingTickets - userTickets
+	for {
 
-	fmt.Printf("Whole array %v\n", bookings)
+		var firstName string
+		var lastName string
+		var email string
+		var userTickets uint
 
-	fmt.Printf("Thans %v %v for reserving %v tickets on email %v\n", firstName, lastName, userTickets, email)
-	fmt.Printf("Total %v, tickets remaining: %v\n", conferenceTickets, remainingTickets)
+		fmt.Println("Pointer example")
+		fmt.Println(remainingTickets)
+		fmt.Println(&remainingTickets)
+
+		fmt.Println("Enter your first name:")
+		fmt.Scanln(&firstName)
+		fmt.Println("Enter your last name:")
+		fmt.Scanln(&lastName)
+		fmt.Println("Enter your email:")
+		fmt.Scanln(&email)
+		fmt.Println("Enter number of tickets:")
+		fmt.Scanln(&userTickets)
+
+		bookings = append(bookings, firstName+"  "+lastName)
+
+		remainingTickets = remainingTickets - userTickets
+
+		fmt.Printf("Whole array %v\n", bookings)
+
+		fmt.Printf("Thans %v %v for reserving %v tickets on email %v\n", firstName, lastName, userTickets, email)
+		fmt.Printf("Total %v, tickets remaining: %v\n", conferenceTickets, remainingTickets)
+
+		firstNames := []string{}
+		for _, booking := range bookings {
+			names := strings.Fields(booking)
+			firstNames = append(firstNames, names[0])
+		}
+		fmt.Printf("Bookers %v\n", firstNames)
+	}
 }
